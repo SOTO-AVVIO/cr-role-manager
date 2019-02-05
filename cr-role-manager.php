@@ -330,7 +330,7 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			}
 		}
 
-		public function pages_list_table_columns($columns, $post_type){
+		public function pages_list_table_columns($columns, $post_type = ''){
 			if ( !$this->is_role( 'hotel_editor' ) ) {
 				return $columns;
 			}
