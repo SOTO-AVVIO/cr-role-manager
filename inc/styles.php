@@ -139,4 +139,10 @@
     .misc-pub-section.misc-pub-revisions {
         display: none!important;
     }
+    .crm-parent-change-warning {
+        border: 1px solid #ee0f8f;
+        padding: 5px;
+        color: #ee0f8f;
+        font-size: 11px;
+    }
 </style>

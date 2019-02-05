@@ -101,6 +101,10 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			add_action( 'load-upload.php', array( $this, 'media_page_loaded' ) );
 			add_action( 'admin_head', array( $this, 'head_style' ) );
 			add_action( 'admin_footer', array( $this, 'footer_scripts' ), 200 );
+			add_action('admin_enqueue_scripts', array(
+				$this,
+				'admin_enqueue_scripts'
+			));
 			add_action('vc_backend_editor_enqueue_js_css', array(
 				$this,
 				'backend_enqueue_editor_css_js'
@@ -277,6 +281,12 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 				return;
 			}
 			require_once $this->root_path . 'inc/scripts.php';
+		}
+		public function admin_enqueue_scripts() {
+			if ( !$this->is_role( 'hotel_editor' ) ) {
+				return;
+			}
+			wp_enqueue_script('crrm-common', $this->root_url . 'assets/js/crrm-common.js', array('jquery'), $this->version, true);
 		}
 		public function backend_enqueue_editor_css_js() {
 			if ( !$this->is_role( 'hotel_editor' ) ) {
