@@ -67,6 +67,8 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			//add_filter( 'get_sample_permalink_html', array( $this, 'sample_permalink_html' ), 999 );
 			add_filter( 'wp_editor_settings', array( $this, 'wp_editor_settings' ), 999 );
 			add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
+			add_filter( 'hidden_meta_boxes', array( $this, 'nav_hidden_meta_boxes' ), 20, 3 );
+			add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 20 );
 
 			add_action('init', array($this, 'rremove_post_type_supports'), 20);
 			// Real Media features
@@ -80,6 +82,16 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			add_filter( 'vc_role_access_with_backend_editor_can_disabled_ce_editor', array( $this, 'vc_classic_editor' ), 20, 2 );
 			add_filter( 'vc_role_access_all_caps_role', array( $this, 'vc_all_caps' ), 20 );
 			add_filter( 'vc_nav_controls', array( $this, 'vc_nav_controls' ), 20 );
+
+
+			add_filter( 'manage_pages_columns', array( $this, 'pages_list_table_columns' ), 20, 2 );
+			add_filter( 'manage_posts_columns', array( $this, 'pages_list_table_columns' ), 20, 2 );
+
+
+			add_filter( 'edit_posts_per_page', array( $this, 'edit_posts_per_page' ), 20, 2 );
+			add_filter( 'edit_comments_per_page', array( $this, 'list_items_per_page' ) );
+
+
 		}
 
 		private function actions() {
@@ -111,6 +123,31 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			}
 			
 			return $classes;
+		}
+
+		public function admin_footer_text($text) {
+			if ( !$this->is_role( 'hotel_editor' ) ) {
+				return $text;
+			}
+			return '';
+		}
+
+		public function nav_hidden_meta_boxes($hidden, $screen, $use_defaults) {
+			if ( !$this->is_role( 'hotel_editor' ) ) {
+				return $hidden;
+			}
+			if('nav-menus' !== $screen->id){
+				return $hidden;
+			}
+			$enabled_boxes = array(
+				'add-post-type-accommodation'
+			);
+			foreach($hidden as $key=>$item){
+				if( in_array( $item, $enabled_boxes )){
+					unset($hidden[$key]);
+				}
+			}
+			return $hidden;
 		}
 
 		public function check_get_var($key, $val) {
@@ -279,13 +316,25 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			add_filter( "bulk_actions-{$current_screen->id}", "__return_false" );
 			if(!empty($current_screen->taxonomy)){
 				add_filter("manage_{$current_screen->id}_columns", array($this, 'list_table_columns'));
+				add_filter("edit_{$current_screen->taxonomy}_per_page", array($this, 'list_items_per_page'));
 			}
 		}
-		
-		public function list_table_columns($columns) {
-			if(isset($columns['description'])){
-				unset($columns['description']);
+
+		public function pages_list_table_columns($columns, $post_type){
+			if ( !$this->is_role( 'hotel_editor' ) ) {
+				return $columns;
 			}
+			if(isset($columns['author'])){
+				unset($columns['author']);
+			}
+			if(('post' !== $post_type) && isset($columns['comments'])){
+				unset($columns['comments']);
+			}
+			return $columns;
+		}
+
+		public function list_table_columns($columns) {
+
 			if(isset($columns['wpseo-score'])){
 				unset($columns['wpseo-score']);
 			}
@@ -293,6 +342,16 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 				unset($columns['wpseo-score-readability']);
 			}
 			return $columns;
+		}
+
+		public function edit_posts_per_page($per_page, $post_type) {
+			if ( !$this->is_role( 'hotel_editor' ) ) {
+				return $per_page;
+			}
+			return $this->list_items_per_page();
+		}
+		public function list_items_per_page($per_page = 100) {
+			return 100;
 		}
 
 		public function is_role( $role ) {
@@ -367,9 +426,20 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			if ( !$this->is_role( 'hotel_editor' ) ) {
 				return;
 			}
+			if(!is_admin()){
+				$wp_admin_bar->add_node(array(
+					'id'    => 'site-name',
+					'href'  => admin_url('edit.php?post_type=page'),
+				));
+			}
 			$wp_admin_bar->remove_node( 'comments' );
 			$wp_admin_bar->remove_node( 'new-content' );
 			$wp_admin_bar->remove_node( 'wpseo-menu' );
+			$wp_admin_bar->remove_node( 'dashboard' );
+			$wp_admin_bar->remove_node( 'widgets' );
+			$wp_admin_bar->remove_node( 'menus' );
+			$wp_admin_bar->remove_node( 'background' );
+			$wp_admin_bar->remove_node( 'customize' );
 		}
 
 		public function hide_screen_option( $show_screen ) {
