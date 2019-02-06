@@ -144,7 +144,8 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 				return $hidden;
 			}
 			$enabled_boxes = array(
-				'add-post-type-accommodation'
+				'add-post-type-accommodation',
+				'add-post-type-apartment',
 			);
 			foreach($hidden as $key=>$item){
 				if( in_array( $item, $enabled_boxes )){
