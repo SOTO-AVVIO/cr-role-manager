@@ -40,7 +40,7 @@
     .crrm-screen-post-edit .page-title-action,
     .crrm-screen-amenity-edit .page-title-action,
     .crrm-screen-apartment-edit .page-title-action,
-    .crrm-screen-apartment-edit .page-title-action,
+    .crrm-screen-offer-edit .page-title-action,
     .edit-php .page-title-action {
         display: none!important;
     }
