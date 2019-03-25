@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: CR Role Manager
-  Description: A customized role manager for CR.
+  Description: A customized role manager for So Hotels.
   Version: 1.3
   Author: Soto
   Author URI: http://www.gosoto.co/
