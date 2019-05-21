@@ -189,7 +189,7 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			if ( !$role || ('hotel_editor' != $role->name) ) {
 				return $value;
 			}
-			return in_array( $rule, array('apartment', 'offer', 'page') );
+			return in_array( $rule, array('apartment', 'offer', 'page', 'accommodation', 'post', 'review', 'team') );
 		}
 		public function vc_backend_editor( $state, $role ) {
 			if ( !$role || ('hotel_editor' != $role->name) ) {
@@ -381,7 +381,7 @@ if ( !class_exists( 'CR_Role_Manager' ) ) {
 			unset( $menu[ 2 ] );
 			unset( $menu[ 4 ] );
 			$to_hide = array(
-				'edit.php?post_type=accommodation',
+				//'edit.php?post_type=accommodation',
 				'edit.php?post_type=cr_map',
 				'profile.php',
 				'tools.php',
