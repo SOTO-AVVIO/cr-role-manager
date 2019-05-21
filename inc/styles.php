@@ -133,9 +133,6 @@
     .nav-tab-wrapper .nav-tab[href*="nav-menus.php?action=locations"] {
         display: none!important;
     }
-    .nav-menus-php .manage-menus .add-new-menu-action {
-        display: none!important;
-    }
     .misc-pub-section.misc-pub-revisions {
         display: none!important;
     }
