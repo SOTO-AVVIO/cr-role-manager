@@ -90,7 +90,6 @@
     }
     [data-element_type="cr_title_icons"] .wpb_element_wrapper,
     [data-element_type="cr_accommodations"] .wpb_element_wrapper,
-    [data-element_type="cr_enquiry_form"] .wpb_element_wrapper,
     [data-element_type="cr_sitemap"] .wpb_element_wrapper,
     [data-element_type="cr_instagram_feed"] .wpb_element_wrapper,
     [data-element_type="cr_allora_integration"] .wpb_element_wrapper,
@@ -100,7 +99,6 @@
     }
     [data-element_type="cr_title_icons"] .wpb_element_wrapper::after,
     [data-element_type="cr_accommodations"] .wpb_element_wrapper::after,
-    [data-element_type="cr_enquiry_form"] .wpb_element_wrapper::after,
     [data-element_type="cr_sitemap"] .wpb_element_wrapper::after,
     [data-element_type="cr_instagram_feed"] .wpb_element_wrapper::after,
     [data-element_type="cr_allora_integration"] .wpb_element_wrapper::after,
@@ -118,7 +116,6 @@
     }
     [data-element_type="cr_title_icons"] .vc_controls .vc_control-btn:not(.vc_element-move),
     [data-element_type="cr_accommodations"] .vc_controls .vc_control-btn:not(.vc_element-move),
-    [data-element_type="cr_enquiry_form"] .vc_controls .vc_control-btn:not(.vc_element-move),
     [data-element_type="cr_sitemap"] .vc_controls .vc_control-btn:not(.vc_element-move),
     [data-element_type="cr_instagram_feed"] .vc_controls .vc_control-btn:not(.vc_element-move),
     [data-element_type="cr_allora_integration"] .vc_controls .vc_control-btn:not(.vc_element-move),
